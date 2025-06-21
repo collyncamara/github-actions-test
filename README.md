@@ -21,7 +21,7 @@ This repository demonstrates how to use GitHub Actions to automate the following
 
 2. **Curl the Image**
     - Use a step in the workflow to download the image:
-    - URL: [Sample Image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFUAfyVe3Easiycyh3isP9wDQTYuSmGPsPQvLIJdEYvQ_DsFq5Ez2Nh_QjiS3oZ3B8ZPfK9cZQyIStmQMV1lDPLw){:target="_blank"}
+    - URL: [Sample Image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFUAfyVe3Easiycyh3isP9wDQTYuSmGPsPQvLIJdEYvQ_DsFq5Ez2Nh_QjiS3oZ3B8ZPfK9cZQyIStmQMV1lDPLw)
     - Save the image to the repository.
 
 3. **Commit the Image**
