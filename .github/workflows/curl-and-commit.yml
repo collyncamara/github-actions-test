@@ -1,0 +1,44 @@
+name: Curl Image and Commit to PR
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  curl_and_commit:
+    if: contains(github.event.pull_request.title, '#signing')
+    runs-on: ubuntu-latest
+    env:
+      FILENAME: "image21.jpg"
+    permissions:
+      contents: write  # Required to push changes to the repository
+      pull-requests: write  # Required to merge the PR
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Download image
+        run: |
+          curl -L "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFUAfyVe3Easiycyh3isP9wDQTYuSmGPsPQvLIJdEYvQ_DsFq5Ez2Nh_QjiS3oZ3B8ZPfK9cZQyIStmQMV1lDPLw" -o "$FILENAME"
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit image
+        run: |
+          git add $FILENAME
+          git commit -m "Add downloaded image" || echo "No changes to commit"
+          git push
+
+      - name: Merge and close PR
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge ${{ github.event.pull_request.number }} --merge --delete-branch --repo ${{ github.repository }}
+        shell: bash
